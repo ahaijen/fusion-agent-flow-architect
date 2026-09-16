@@ -23,6 +23,21 @@ At the start of every substantive use-case investigation, check the current Orac
 
 Treat the learning path as release-sensitive enablement guidance, not proof of a particular REST interface, field, tool behavior, role, or customer-pod capability. If the page, relevant linked guidance, or web access is unavailable, state that alignment is **Unknown** and request or record the applicable Fusion release and customer-pod evidence. Call out content marked as release-sensitive, pending, or subject to update. Do not retain a past reading as current evidence for a later use case.
 
+## Documented platform boundary
+
+Design only what Oracle Fusion AI Agent Studio documents as available for the verified Fusion release and what the target environment supports. `docs.oracle.com` is the ultimate source for Oracle Fusion REST APIs and AI Agent Studio capabilities. At the start of any capability, API, tool, workflow, Agentic Application, approval, testing, or handoff decision, consult the relevant current `docs.oracle.com` documentation for the applicable release and record the source or mark the result **Unknown**.
+
+Use evidence in this order:
+
+1. current relevant `docs.oracle.com` documentation for the applicable release;
+2. verified behavior in the authorized target environment, which confirms its configuration and availability but does not rewrite documented semantics;
+3. the Oracle learning path as release-sensitive enablement context;
+4. the Fusion AI Studio repository as release-aligned implementation guidance.
+
+Neither a blog, repository sample, UI label, naming convention, nor remembered product behavior establishes a supported API or capability. When sources conflict, do not choose a convenient interpretation: cite the conflict, treat the point as **Unknown**, and require release-specific documentation or target-environment verification.
+
+Never propose, design, generate, or hand off a custom web application, standalone frontend, custom user interface, custom widget framework, or any interaction pattern outside the documented Fusion AI Agent Studio surface. When the use case needs an experience for users, recommend an Agentic Application only when the requested interaction is supported by current Oracle documentation. Describe its documented platform components and constraints, not an invented screen, layout, component, or UX behavior. If the requested experience is not documented, identify it as out of scope for this skill and offer only a documented alternative or a verification item.
+
 ## Evidence and uncertainty are mandatory
 
 Classify every Oracle-specific assertion with one of these states:
@@ -60,15 +75,63 @@ For Discovery / Presales Brief and Solution Design, give a useful best-effort pr
 
 Do not present a Candidate capability map as a product commitment. If the user needs an executive summary, lead with value, feasibility boundaries, and recommended next decision; put technical detail in an appendix or defer it to Technical Handoff.
 
-## Select the AI Studio implementation pattern before API design
+## Select the lowest-complexity documented AI Studio build unit before API design
 
-Choose one preferred pattern and explain it before listing APIs:
+Choose the lowest-complexity documented build unit that satisfies the confirmed requirements. Do not add nodes, agents, an Agentic Application, or integrations merely for flexibility. Explain the choice before listing APIs, using these options in order of increasing complexity:
 
-- **AI Workflow** for a bounded, deterministic business process with clear steps, branching, and controlled integrations.
-- **AI Agent Team** when multiple specialist agents must reason, collaborate, or own distinct domains/tools.
-- **Agentic Application** when the solution needs a broader interactive application experience, UI-driven work, durable context, or more autonomous exploration.
+- **Workflow with a single Agent node** for a focused domain interaction, bounded tools/topics, and one agent responsibility. The Agent node runs within the workflow.
+- **Workflow with a Multi Agent node** for distinct specialist agent responsibilities that require documented supervisor routing within a workflow. Use this only when the responsibilities, routing, and evaluation plan are materially different from a single Agent node.
+- **Deterministic Agent workflow** for a bounded, predictable process that combines only the documented workflow nodes needed for explicit steps, branching, controlled integrations, approvals, and completion checks. Do not treat "all nodes possible" as a requirement; use the minimum documented node set that solves the use case.
+- **Agentic Application** only when the use case needs a broader interactive experience that is supported by documented Agentic Application capabilities.
 
-Base the choice on determinism, orchestration, specialist roles, human-in-the-loop control, UI needs, API sequencing, update risk, and scope. If more than one is plausible, name the preferred pattern and state the conditions that favor the alternative. Do not claim certainty where key facts are Unknown.
+Do not describe an Agent as a standalone deployable flow in this skill. Agent and Multi Agent nodes operate within workflows. Treat “Deterministic Agent workflow” as a requester-facing selection label; verify the exact selected-release Oracle artifact and capability terminology before asserting it as a product construct.
+
+Base the choice on determinism, orchestration, specialist roles, human-in-the-loop control, documented interaction needs, API sequencing, update risk, and scope. If more than one is plausible, name the preferred lowest-complexity option and state the conditions that favor the alternative. If the requester explicitly chooses a different documented approach, honor that preference after recording its additional complexity, rationale, scope boundaries, and release/capability evidence. The preference never overrides documentation, live-validation gates, or operation-specific write approval. Do not claim certainty where key facts are Unknown. A Multi Agent node is not an excuse to add agents without distinct responsibilities, documented routing requirements, and an evaluation plan.
+
+For every pattern recommendation, state the documented platform boundary: which documented AI Agent Studio capability supports the proposal, which target-release documentation was checked, and what is deliberately not being proposed. Do not substitute a custom interface for a documented Agentic Application capability.
+
+## Prompt specification for LLM, Agent, and Multi Agent components
+
+When the recommended build unit contains an LLM prompt, Agent, or Multi Agent node, prepare a prompt specification for the Fusion AI Studio handoff. Do not write a generic persona paragraph. Use this CRAFT-derived structure:
+
+- **Context** — verified business objective, user/actor, release, process boundary, live-validated data/tool context, security/data-minimization constraints, and known runtime inputs.
+- **Role** — narrowly scoped responsibility and expertise boundary; for a Multi Agent node, define the supervisor's routing responsibility and each worker's distinct responsibility.
+- **Action** — allowed decisions, tools, sequence, approval/escalation behavior, and explicit prohibited actions. Do not delegate identifiers, authorization, exact validation, mutation decisions, or pagination control to an LLM.
+- **Format** — documented and live-validated output contract, fields, confidence/evidence labels, citation or source-reference behavior, and behavior for missing/ambiguous data. Do not invent a schema.
+- **Target and tone** — intended functional audience, plain-language level, business-criticality, concise tone, and required next action.
+
+Add prompt guardrails: distinguish Confirmed/Candidate/Unknown; use only approved, live-validated tools and data mappings; never invent Fusion metadata or business facts; surface ambiguity; minimize sensitive data; enforce human approval before material side effects; and state what to do when a required tool or data item is unavailable. Keep known facts, assumptions, and open verification items separate.
+
+Define an evaluation plan before handoff. Include representative business requests, expected decision/routing outcome, expected tool use or no-tool decision, expected output qualities, negative/ambiguous cases, safety/approval cases, and measurable acceptance criteria. For an Agent or Multi Agent node, require runtime inspection of the actual prompt/instructions, inputs/context, output, tool actions, routing decision where applicable, and downstream output suitability. Score grounding/fusion fidelity, usefulness, reliability, completeness, and action safety on a 0–1 scale; refine the prompt if a score is below 0.9, and never fabricate a score when testing has not occurred.
+
+## Slice the use case into query-first implementation increments
+
+Do not design or hand off the entire use case as one large build. Break it into the smallest independently useful increments that move the business outcome forward. Each increment must have one bounded user/business outcome, a narrow set of documented capabilities and APIs, a named owner, a read-only or mutation classification, explicit acceptance evidence, and a clear reason it unlocks the next increment.
+
+Start with query-only increments even when the eventual use case includes updates. A suitable first increment normally proves a useful answer from one safe, documented query path; it may include the minimum identifier or lookup resolution required for that answer. Do not include mutations, multi-domain orchestration, optional external systems, custom experience design, or broad automation in the first increment unless they are strictly required to make the query meaningful or the requester explicitly chooses a broader first iteration.
+
+Create a tailored **Baby-Step Implementation Plan**. Use only the steps needed for the use case, but sequence them like this:
+
+1. confirm applicable release, documented platform scope, environment readiness, and one measurable business outcome;
+2. validate the simplest query-only context, identifier, or lookup call;
+3. deliver the primary query-only business result through a single documented capability;
+4. add only the next necessary child resource, lookup, decision branch, or read-only external API;
+5. prove the complete query-only path through live simulation and business-result verification;
+6. design—but do not execute—any mutation as a later, separately approved increment;
+7. test one mutation type in sandbox/test with explicit approval, minimal payload, one safe record, recovery plan, and verification;
+8. add later mutations, workflow/actions, or additional domains only after the preceding increment passes.
+
+For each increment, state: scope and non-goals; user-facing value; documented capability/API evidence; required inputs and resolved identifiers; query-only/mutation status; test scenario and pass criteria; failure/rollback boundary; dependencies; and the explicit gate to begin the next increment. Do not carry a failed, untested, or ambiguous dependency into a later increment. If a request is already too broad, propose the first viable query-only increment and a short backlog rather than a speculative full solution.
+
+### User-directed scope override
+
+The baby-step plan is the default risk-reduction path, not a reason to disregard an explicit user scope decision. A requester may require additional documented capabilities, read-only integrations, or an update step in the first iteration. Capture that choice as an **Explicit First-Iteration Scope Directive** and revise the increment plan to show exactly what is included, deferred, and why.
+
+An expanded first iteration must still be bounded: identify each added capability/API, its documented source, its dependency and live-test scenario, its user-facing value, its acceptance criteria, and its failure boundary. Do not turn a user request for more scope into an open-ended architecture or an invented capability.
+
+An update in the first iteration remains a separately controlled operation. Before its live execution, require a confirmed API contract, successful prerequisite query/identifier and payload-construction tests, a sandbox/test target and safe test record where available, a recovery plan, and fresh explicit approval for that exact method, endpoint/resource, payload, environment, and record. The user's scope directive authorizes inclusion in the design; it does not by itself authorize a live write.
+
+If these conditions cannot be met, retain the requested update as a clearly labeled blocked scope item and provide the fastest safe path to unlock it. Never silently downgrade an explicit user request, but never silently execute it either.
 
 ## Design an end-to-end API flow
 
@@ -104,6 +167,23 @@ For each live test, record the timestamp, environment classification, scenario/t
 
 Simulation must exercise the real call sequence and prove that response data can drive the next step. For a mutation-capable flow, simulate all non-mutating branches first. A create, update, patch, submit, action, workflow trigger, or external write is prohibited until the user gives explicit approval for that exact operation, target environment, and test record. Reconfirm the operation boundary if scope changes. After an approved mutation, verify the business result and plan recovery before proceeding to the next mutation.
 
+### Scenario matrix and contract freeze
+
+Build a scenario matrix before live execution. Cover, as applicable: happy path; no records; multiple records; invalid or missing identifiers; unavailable or invalid lookup/master data; authorization failure; validation failure; pagination; timeout/transient error; concurrency or partial completion; and each business exception or approval branch. State the expected decision and safe termination/recovery behavior for each scenario.
+
+Replay each scenario in the same sequence the eventual agent/application must execute:
+
+1. establish approved context and retrieve the first business record or session context;
+2. resolve exactly one valid record when a search returns candidates; stop and surface ambiguity rather than choosing silently;
+3. carry only the needed identifiers and values from each live response into the next call; record this approved conversation/application state mapping;
+4. construct any mutation payload from live returned values or user-confirmed test values, but execute it only after the required explicit approval;
+5. construct and test a deeplink only when its pattern is documented, supplied, or exported; use real returned identifiers and verify appropriate parameter encoding;
+6. prove that the final user-facing result is grounded in the live response data and that the final business state is verified.
+
+Test lookup, LOV, search, and reference-data calls before depending on their values. Do not hard-code business units, suppliers, customers, sites, transaction types, plans, statuses, or other master data unless the user confirms the value is stable and valid in the target environment. Add a lookup to the proposed runtime flow when it is necessary to discover a valid value at runtime.
+
+After live testing, revise the design before handoff: remove broken operations; correct only evidence-supported paths, headers, query syntax, parameter names, data types, response fields, and payload mappings; add proven lookup operations; and mark every skipped or failed call as untested or blocked. This is the **contract freeze** for the handoff. It is not permission to generate JSON, mutate data, or make a substitute implementation.
+
 If any required API is untested, inaccessible, ambiguous, or fails, stop the handoff. Produce a live-validation gap list and remediation plan instead of a Fusion AI Studio handoff prompt. Never represent a Candidate contract or an untested external API as live-validated.
 
 ## Fusion AI Studio handoff
@@ -118,7 +198,7 @@ The handoff prompt must be self-contained and use only Confirmed or explicitly l
 - verified Fusion release, target environment classification, relevant current Fusion AI Studio source branch, and explicit statement that no credentials are included;
 - recommended AI Studio pattern and why it fits, plus the requested artifact scope;
 - a requirement-to-capability traceability table and only the live-validated REST/external API contracts, identifier paths, data mappings, branches, and error behavior;
-- live-test evidence summary, end-to-end simulation outcomes, unresolved gaps, and test-data constraints;
+- live-test evidence summary, scenario-matrix outcomes, end-to-end simulation outcomes, approved conversation/application state mappings, unresolved gaps, and test-data constraints;
 - mutation policy: read-only by default; no write operation without fresh explicit user approval for its exact target and test record;
 - required implementation constraints, security/data-access constraints, observability/audit expectations, and acceptance tests;
 - explicit instructions to inspect the selected Fusion AI Studio skill before creating artifacts, create drafts locally first, preserve the verified contracts, and never invent missing Oracle details.
@@ -139,18 +219,27 @@ Approvals and non-goals: [APPROVAL_POINTS_AND_NON_GOALS]
 Environment and security: This is a [SANDBOX_TEST_PRODUCTION] environment on [VERIFIED_FUSION_RELEASE]. Authentication and connection setup must use approved secure configuration; no credentials are included in this prompt. Enforce [DATA_ACCESS_AND_LEAST_PRIVILEGE_CONSTRAINTS].
 
 Recommended implementation: [CONFIRMED_PATTERN_AND_RATIONALE]
+Platform boundary: Build only the selected-release capabilities documented on docs.oracle.com and verified in the target environment. Do not create a custom web application, frontend, user interface, widget framework, or unsupported interaction. [DOCUMENTED_AGENT_STUDIO_CAPABILITIES_AND_SOURCE_REFERENCES]
+Target build unit: [WORKFLOW_WITH_SINGLE_AGENT_NODE | WORKFLOW_WITH_MULTI_AGENT_NODE | DETERMINISTIC_AGENT_WORKFLOW | AGENTIC_APPLICATION]
 Requested artifacts: [APP_WORKFLOW_AGENT_TOOL_OR_OTHER_CONFIRMED_SCOPE]
 Requirement traceability: [BUSINESS_REQUIREMENT_TO_CAPABILITY_TO_TEST_TABLE]
+Baby-step plan: [ORDERED_SMALL_INCREMENTS__CURRENT_QUERY_ONLY_INCREMENT__PASS_CRITERIA__NEXT_INCREMENT_GATES]
+Explicit first-iteration scope directive, if any: [USER_REQUESTED_ADDITIONAL_CAPABILITIES_OR_UPDATE__INCLUDED_DEFERRED_BLOCKED_ITEMS__WRITE_APPROVAL_STATUS]
+
+Prompt specification, if an LLM, Agent, or Multi Agent component is in scope:
+[CONTEXT__ROLE__ACTION__FORMAT__TARGET_TONE__GUARDRAILS__APPROVED_TOOLS_AND_DATA__KNOWN_FACTS_ASSUMPTIONS_OPEN_ITEMS]
+Prompt evaluation plan: [REPRESENTATIVE_REQUESTS__EXPECTED_ROUTING_AND_TOOL_USE__NEGATIVE_CASES__SAFETY_CASES__ACCEPTANCE_CRITERIA__0_TO_1_SCORECARD]
 
 Live-validated contracts only:
 [CONFIRMED_FUSION_AND_EXTERNAL_API_SEQUENCE__IDENTIFIER_PATHS__DATA_MAPPINGS__BRANCHES__ERROR_BEHAVIOR]
 
+Scenario matrix and state mappings: [HAPPY_PATH__EXCEPTION_PATHS__EXACTLY_ONE_RECORD_RULES__LOOKUP_DISCOVERY__PAGINATION__DEEP_LINKS__APPROVED_STATE_FIELDS]
 Live validation evidence: [REDACTED_TEST_SUMMARY__SIMULATION_OUTCOMES__CORRELATION_REFERENCES_WHERE_SAFE]
 Open gaps: [CANDIDATE_OR_UNKNOWN_ITEMS_AND_REQUIRED_VERIFICATION]
 
 Safety: Start read-only. Do not create, update, submit, trigger actions, or call external write APIs without fresh explicit user approval for the exact operation, environment, and test record. Do not invent Oracle resources, fields, roles, privileges, database objects, joins, or artifact schemas.
 
-Build approach: Create drafts locally first. Preserve the verified contracts and required approval points. Add observability/audit information and acceptance tests for [ACCEPTANCE_CRITERIA]. Where available in the selected release branch, use its documented testing approach to encode the validated scenarios and regression checks. Report any mismatch between the requested design and current skill/release capabilities before making a substitute design.
+Build approach: Create drafts locally first. Implement [CURRENT_VALIDATED_INCREMENT] now. If an Explicit First-Iteration Scope Directive is present, implement only its named, validated additional scope; do not add later increments or unapproved write-capable paths. Preserve the verified contracts and required approval points. Add observability/audit information and acceptance tests for [CURRENT_INCREMENT_ACCEPTANCE_CRITERIA]. Where available in the selected release branch, use its documented testing approach to encode the validated scenarios and regression checks. Report any mismatch between the requested design and current skill/release capabilities before making a substitute design.
 ```
 
 ## Mutation and action safety
@@ -194,22 +283,23 @@ Unless the requester specifies another format, select one of these structures.
 
 1. `# 1. Business Use Case and Desired Outcome`
 2. `# 2. Current Oracle AI Agent Studio Alignment` — retrieval date, relevant current learning-path topics, and release-sensitive items.
-3. `# 3. Recommended AI Studio Pattern`
-4. `# 4. Solution Hypothesis and User Journey`
-5. `# 5. Capability Map and Feasibility Boundaries`
-6. `# 6. Proof-of-Value Proposal`
-7. `# 7. Assumptions, Risks, and Open Questions`
-8. `# 8. Learning Path Next Steps`
-9. `# 9. Decision and Validation Plan`
+3. `# 3. Documented Platform Scope` — applicable release, relevant docs.oracle.com sources, supported capability boundary, and explicit exclusions.
+4. `# 4. Recommended AI Studio Build Unit`
+5. `# 5. Solution Hypothesis and User Journey`
+6. `# 6. Capability Map and Feasibility Boundaries`
+7. `# 7. Proof-of-Value Proposal`
+8. `# 8. Assumptions, Risks, and Open Questions`
+9. `# 9. Learning Path Next Steps`
+10. `# 10. Baby-Step Implementation Plan and Decision`
 
 Use a compact requirement traceability table where it clarifies ownership or evidence. Keep technical mappings clearly labeled Candidate or Unknown until verified.
 
 ### Technical Handoff
 
-Start with a brief current Oracle AI Agent Studio Alignment section, then use these headings in order:
+Start with brief current Oracle AI Agent Studio Alignment and Documented Platform Scope sections, then use these headings in order:
 
 1. `# 1. Use Case Interpretation`
-2. `# 2. Recommended AI Studio Pattern` — preferred pattern, rationale, and plausible alternative conditions.
+2. `# 2. Recommended AI Studio Build Unit` — preferred lowest-complexity option: Workflow with a single Agent node, Workflow with a Multi Agent node, Deterministic Agent workflow, or Agentic Application; rationale, requester preference if any, and plausible alternatives.
 3. `# 3. End-to-End API Flow` — an auditable table with step, API/resource, endpoint, method, purpose, required inputs, query parameters, extracted data, branch, next step, requirement class, and confidence.
 4. `# 4. Detailed API Design`
 5. `# 5. Update / Action Payloads`
@@ -218,7 +308,7 @@ Start with a brief current Oracle AI Agent Studio Alignment section, then use th
 8. `# 8. Security and Permissions`
 9. `# 9. Error Handling and Recovery`
 10. `# 10. Open Verification Items`
-11. `# 11. Agent Creation and Testing Plan`
+11. `# 11. Baby-Step Agent / Workflow Creation and Testing Plan` — include prompt specification and evaluation when LLM, Agent, or Multi Agent components are used.
 12. `# 12. Live Validation and Fusion AI Studio Handoff` — gate status, live-test evidence, simulation outcome, or the complete copyable handoff prompt when the gate passes.
 
 The verification section must be a concrete checklist covering Oracle documentation, current learning-path/release alignment, release/configuration, target pod, security, BI Publisher, and API tests. Keep the design implementation-oriented and audit-friendly; distinguish evidence, assumptions, and unknowns at the point they affect a decision. For Technical Handoff, retain the complete read-only-first sequence and do not omit API-flow, mutation, BIP, security, recovery, or production-readiness controls. Never emit the Fusion AI Studio Handoff Prompt until the live validation gate passes.
