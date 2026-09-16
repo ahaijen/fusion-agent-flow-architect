@@ -8,4 +8,6 @@ Use `docs.oracle.com` as the authority for Fusion REST APIs and AI Agent Studio 
 
 The skill's final deliverable is clear, copyable instructions for a separate Fusion AI Studio Codex session, never an AI Studio JSON file. REST request-payload examples may be included only as explanatory API-design snippets where evidence permits.
 
+For the receiving Fusion AI Studio Codex session, instruct it to create documented Business Objects for every Fusion interaction from the validated REST-based mappings. Do not instruct it to create, configure, or invoke Fusion REST tools, direct REST calls, REST endpoints, or generic REST integrations; retain validated REST contracts solely as mapping evidence.
+
 Decompose each use case into small, independently testable increments. Start with a useful query-only path by default, and select the lowest-complexity documented AI Studio build unit that solves the confirmed requirement. Honor an explicit user request for broader first-iteration scope or another documented build approach while retaining documented-capability, live-validation, and operation-specific mutation-approval gates.

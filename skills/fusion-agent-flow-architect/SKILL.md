@@ -11,7 +11,15 @@ Create an auditable implementation design for Oracle Fusion Cloud Applications u
 
 This skill's deliverable is a clear, copyable **Fusion AI Studio Handoff Prompt** for a separate Codex session running the Fusion AI Studio skill. Do not generate, upload, export, modify, attach, or propose an AI Studio workflow, agent, team, application, or other JSON file as this skill's output. Do not turn the handoff into a JSON schema, JSON template, or an artifact-generation request.
 
-The handoff must give the receiving Fusion AI Studio skill the verified requirements, boundaries, API contract evidence, testing evidence, and acceptance criteria it needs to make its own evidence-aware recommendations. Instruct that session to remain in instruction/design mode unless its user separately and explicitly asks it to generate a supported artifact. JSON REST request-body examples remain permitted only inside the technical API design when required to explain a Confirmed or clearly labeled Candidate mutation payload; they are explanatory snippets, not deliverable files.
+The handoff must give the receiving Fusion AI Studio skill the verified requirements, boundaries, API contract evidence, testing evidence, and acceptance criteria it needs to create the documented Business Objects required by the validated use case. The handoff itself remains clear, copyable instructions, not an artifact or JSON file. JSON REST request-body examples remain permitted only inside the technical API design when required to explain a Confirmed or clearly labeled Candidate mutation payload; they are explanatory snippets, not deliverable files.
+
+## Fusion access boundary for the receiving Codex session
+
+For the Fusion AI Studio handoff, instruct the receiving Codex session to create the documented **Business Objects** required for every interaction with Oracle Fusion, using the live-validated REST contracts as their technical basis. Do not instruct it to create, configure, or invoke a Fusion REST tool, direct Fusion REST call, REST endpoint, or generic REST integration. The REST contract is supporting evidence for the Business Object mapping only; it is not the implementation interface requested from the receiving session.
+
+For each proposed Fusion interaction, provide a **Business Object mapping**: business-object name and operation only when documented or verified; business purpose; required business inputs and resolved identifiers; expected business outputs; read/write classification; permission boundary; the underlying validated REST evidence reference; and Confirmed/Candidate/Unknown state. Never invent a Business Object name, operation, input, output, or capability. If the target-release documentation does not establish a suitable Business Object, mark the mapping **Unknown** and stop short of proposing a direct REST substitute for Fusion.
+
+This boundary applies only to Fusion access. Describe an external system through its documented and live-validated integration mechanism, clearly separating it from Fusion Business Objects.
 
 ## Start with the audience and delivery depth
 
@@ -203,7 +211,7 @@ The handoff prompt must be self-contained and use only Confirmed or explicitly l
 - business objective, personas, trigger, user journey, approval points, exceptions, success measures, and non-goals;
 - verified Fusion release, target environment classification, relevant current Fusion AI Studio source branch, and explicit statement that no credentials are included;
 - recommended AI Studio pattern and why it fits, plus the requested artifact scope;
-- a requirement-to-capability traceability table and only the live-validated REST/external API contracts, identifier paths, data mappings, branches, and error behavior;
+- a requirement-to-capability traceability table and only the live-validated Fusion Business Object mappings (with supporting REST-evidence references) and external API contracts, identifier paths, data mappings, branches, and error behavior;
 - live-test evidence summary, scenario-matrix outcomes, end-to-end simulation outcomes, approved conversation/application state mappings, unresolved gaps, and test-data constraints;
 - mutation policy: read-only by default; no write operation without fresh explicit user approval for its exact target and test record;
 - required implementation constraints, security/data-access constraints, observability/audit expectations, and acceptance tests;
@@ -228,6 +236,7 @@ Recommended implementation: [CONFIRMED_PATTERN_AND_RATIONALE]
 Platform boundary: Build only the selected-release capabilities documented on docs.oracle.com and verified in the target environment. Do not create a custom web application, frontend, user interface, widget framework, or unsupported interaction. [DOCUMENTED_AGENT_STUDIO_CAPABILITIES_AND_SOURCE_REFERENCES]
 Target build unit: [WORKFLOW_WITH_SINGLE_AGENT_NODE | WORKFLOW_WITH_MULTI_AGENT_NODE | DETERMINISTIC_AGENT_WORKFLOW | AGENTIC_APPLICATION]
 Requested implementation scope: [CONFIRMED_WORKFLOW_AGENT_TOOL_OR_OTHER_SCOPE] — provide clear implementation instructions only; do not generate or request an AI Studio JSON file.
+Fusion access rule: Create the documented Business Objects required for every Fusion interaction, based only on the validated Business Object mappings and their REST-evidence references below. Do not create, configure, or invoke a Fusion REST tool, direct Fusion REST call, REST endpoint, or generic REST integration.
 Requirement traceability: [BUSINESS_REQUIREMENT_TO_CAPABILITY_TO_TEST_TABLE]
 Baby-step plan: [ORDERED_SMALL_INCREMENTS__CURRENT_QUERY_ONLY_INCREMENT__PASS_CRITERIA__NEXT_INCREMENT_GATES]
 Explicit first-iteration scope directive, if any: [USER_REQUESTED_ADDITIONAL_CAPABILITIES_OR_UPDATE__INCLUDED_DEFERRED_BLOCKED_ITEMS__WRITE_APPROVAL_STATUS]
@@ -236,16 +245,16 @@ Prompt specification, if an LLM, Agent, or Multi Agent component is in scope:
 [CONTEXT__ROLE__ACTION__FORMAT__TARGET_TONE__GUARDRAILS__APPROVED_TOOLS_AND_DATA__KNOWN_FACTS_ASSUMPTIONS_OPEN_ITEMS]
 Prompt evaluation plan: [REPRESENTATIVE_REQUESTS__EXPECTED_ROUTING_AND_TOOL_USE__NEGATIVE_CASES__SAFETY_CASES__ACCEPTANCE_CRITERIA__0_TO_1_SCORECARD]
 
-Live-validated contracts only:
-[CONFIRMED_FUSION_AND_EXTERNAL_API_SEQUENCE__IDENTIFIER_PATHS__DATA_MAPPINGS__BRANCHES__ERROR_BEHAVIOR]
+Live-validated mappings and contracts only:
+[CONFIRMED_FUSION_BUSINESS_OBJECT_MAPPINGS__REST_EVIDENCE_REFERENCES__EXTERNAL_API_CONTRACTS__IDENTIFIER_PATHS__DATA_MAPPINGS__BRANCHES__ERROR_BEHAVIOR]
 
 Scenario matrix and state mappings: [HAPPY_PATH__EXCEPTION_PATHS__EXACTLY_ONE_RECORD_RULES__LOOKUP_DISCOVERY__PAGINATION__DEEP_LINKS__APPROVED_STATE_FIELDS]
 Live validation evidence: [REDACTED_TEST_SUMMARY__SIMULATION_OUTCOMES__CORRELATION_REFERENCES_WHERE_SAFE]
 Open gaps: [CANDIDATE_OR_UNKNOWN_ITEMS_AND_REQUIRED_VERIFICATION]
 
-Safety: Start read-only. Do not create, update, submit, trigger actions, or call external write APIs without fresh explicit user approval for the exact operation, environment, and test record. Do not invent Oracle resources, fields, roles, privileges, database objects, joins, or artifact schemas.
+Safety: Start read-only. Do not create, update, submit, trigger actions, invoke write-capable Business Object operations, or call external write APIs without fresh explicit user approval for the exact operation, environment, and test record. Do not invent Oracle resources, fields, roles, privileges, database objects, joins, Business Object capabilities, or artifact schemas.
 
-Build approach: Provide a clear, sequenced implementation instruction set for [CURRENT_VALIDATED_INCREMENT]. Do not generate, upload, export, or request an AI Studio JSON file in this session. If an Explicit First-Iteration Scope Directive is present, address only its named, validated additional scope; do not add later increments or unapproved write-capable paths. Preserve the verified contracts and required approval points. Specify observability/audit information and acceptance tests for [CURRENT_INCREMENT_ACCEPTANCE_CRITERIA]. Where available in the selected release branch, refer to its documented testing approach for the validated scenarios and regression checks. Report any mismatch between the requested design and current skill/release capabilities before making a substitute design.
+Build approach: Create the documented Business Objects for [CURRENT_VALIDATED_INCREMENT] from the validated mappings, not from guessed metadata. Do not create Fusion REST tools, direct Fusion REST calls, REST endpoints, generic REST integrations, or an AI Studio JSON file. If an Explicit First-Iteration Scope Directive is present, address only its named, validated additional scope; do not add later increments or unapproved write-capable paths. Preserve the verified contracts and required approval points. Specify observability/audit information and acceptance tests for [CURRENT_INCREMENT_ACCEPTANCE_CRITERIA]. Where available in the selected release branch, refer to its documented testing approach for the validated scenarios and regression checks. Report any mismatch between the requested design and current skill/release capabilities before making a substitute design.
 ```
 
 ## Mutation and action safety
@@ -268,7 +277,7 @@ Cover authentication/authorization failures, no or multiple matches, invalid ide
 
 Use this required testing order, and make it concrete for the use case:
 
-1. simplest safe read-only GET: authentication, endpoint/resource, query, identifier, response parsing;
+1. simplest safe read-only Business Object operation, validated first against its underlying GET evidence: authentication, documented Business Object mapping, identifier, and response parsing;
 2. lookup/reference calls;
 3. child-resource calls;
 4. branches and edge cases;
