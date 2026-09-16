@@ -7,6 +7,12 @@ description: Design evidence-aware Oracle Fusion Cloud Applications REST, BI Pub
 
 Create an auditable implementation design for Oracle Fusion Cloud Applications use cases intended for Oracle AI Agent Studio. Accept prose, business requirements, process descriptions, and screenshots. Support functional stakeholders first, then increase technical depth only as the use case and evidence justify it. Prioritize correctness, source traceability, and safe implementation over a superficially complete answer.
 
+## Output boundary: instructions, never an AI Studio JSON deliverable
+
+This skill's deliverable is a clear, copyable **Fusion AI Studio Handoff Prompt** for a separate Codex session running the Fusion AI Studio skill. Do not generate, upload, export, modify, attach, or propose an AI Studio workflow, agent, team, application, or other JSON file as this skill's output. Do not turn the handoff into a JSON schema, JSON template, or an artifact-generation request.
+
+The handoff must give the receiving Fusion AI Studio skill the verified requirements, boundaries, API contract evidence, testing evidence, and acceptance criteria it needs to make its own evidence-aware recommendations. Instruct that session to remain in instruction/design mode unless its user separately and explicitly asks it to generate a supported artifact. JSON REST request-body examples remain permitted only inside the technical API design when required to explain a Confirmed or clearly labeled Candidate mutation payload; they are explanatory snippets, not deliverable files.
+
 ## Start with the audience and delivery depth
 
 Use plain business language unless the requester asks for implementation detail. Choose the delivery lane explicitly:
@@ -201,7 +207,7 @@ The handoff prompt must be self-contained and use only Confirmed or explicitly l
 - live-test evidence summary, scenario-matrix outcomes, end-to-end simulation outcomes, approved conversation/application state mappings, unresolved gaps, and test-data constraints;
 - mutation policy: read-only by default; no write operation without fresh explicit user approval for its exact target and test record;
 - required implementation constraints, security/data-access constraints, observability/audit expectations, and acceptance tests;
-- explicit instructions to inspect the selected Fusion AI Studio skill before creating artifacts, create drafts locally first, preserve the verified contracts, and never invent missing Oracle details.
+- explicit instructions to inspect the selected Fusion AI Studio skill, remain in instruction/design mode, preserve the verified contracts, and never invent missing Oracle details.
 
 Do not include secrets, access tokens, passwords, private URLs not authorized for sharing, or unnecessary PII in the prompt. Use clearly labeled secure-configuration placeholders where the receiving session must connect to the environment.
 
@@ -221,7 +227,7 @@ Environment and security: This is a [SANDBOX_TEST_PRODUCTION] environment on [VE
 Recommended implementation: [CONFIRMED_PATTERN_AND_RATIONALE]
 Platform boundary: Build only the selected-release capabilities documented on docs.oracle.com and verified in the target environment. Do not create a custom web application, frontend, user interface, widget framework, or unsupported interaction. [DOCUMENTED_AGENT_STUDIO_CAPABILITIES_AND_SOURCE_REFERENCES]
 Target build unit: [WORKFLOW_WITH_SINGLE_AGENT_NODE | WORKFLOW_WITH_MULTI_AGENT_NODE | DETERMINISTIC_AGENT_WORKFLOW | AGENTIC_APPLICATION]
-Requested artifacts: [APP_WORKFLOW_AGENT_TOOL_OR_OTHER_CONFIRMED_SCOPE]
+Requested implementation scope: [CONFIRMED_WORKFLOW_AGENT_TOOL_OR_OTHER_SCOPE] — provide clear implementation instructions only; do not generate or request an AI Studio JSON file.
 Requirement traceability: [BUSINESS_REQUIREMENT_TO_CAPABILITY_TO_TEST_TABLE]
 Baby-step plan: [ORDERED_SMALL_INCREMENTS__CURRENT_QUERY_ONLY_INCREMENT__PASS_CRITERIA__NEXT_INCREMENT_GATES]
 Explicit first-iteration scope directive, if any: [USER_REQUESTED_ADDITIONAL_CAPABILITIES_OR_UPDATE__INCLUDED_DEFERRED_BLOCKED_ITEMS__WRITE_APPROVAL_STATUS]
@@ -239,7 +245,7 @@ Open gaps: [CANDIDATE_OR_UNKNOWN_ITEMS_AND_REQUIRED_VERIFICATION]
 
 Safety: Start read-only. Do not create, update, submit, trigger actions, or call external write APIs without fresh explicit user approval for the exact operation, environment, and test record. Do not invent Oracle resources, fields, roles, privileges, database objects, joins, or artifact schemas.
 
-Build approach: Create drafts locally first. Implement [CURRENT_VALIDATED_INCREMENT] now. If an Explicit First-Iteration Scope Directive is present, implement only its named, validated additional scope; do not add later increments or unapproved write-capable paths. Preserve the verified contracts and required approval points. Add observability/audit information and acceptance tests for [CURRENT_INCREMENT_ACCEPTANCE_CRITERIA]. Where available in the selected release branch, use its documented testing approach to encode the validated scenarios and regression checks. Report any mismatch between the requested design and current skill/release capabilities before making a substitute design.
+Build approach: Provide a clear, sequenced implementation instruction set for [CURRENT_VALIDATED_INCREMENT]. Do not generate, upload, export, or request an AI Studio JSON file in this session. If an Explicit First-Iteration Scope Directive is present, address only its named, validated additional scope; do not add later increments or unapproved write-capable paths. Preserve the verified contracts and required approval points. Specify observability/audit information and acceptance tests for [CURRENT_INCREMENT_ACCEPTANCE_CRITERIA]. Where available in the selected release branch, refer to its documented testing approach for the validated scenarios and regression checks. Report any mismatch between the requested design and current skill/release capabilities before making a substitute design.
 ```
 
 ## Mutation and action safety

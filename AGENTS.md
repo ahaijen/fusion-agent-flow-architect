@@ -6,4 +6,6 @@ Oracle-specific facts must be classified as **Confirmed**, **Candidate**, or **U
 
 Use `docs.oracle.com` as the authority for Fusion REST APIs and AI Agent Studio capabilities. Do not propose custom interfaces or capabilities outside the documented Fusion AI Agent Studio platform.
 
+The skill's final deliverable is clear, copyable instructions for a separate Fusion AI Studio Codex session, never an AI Studio JSON file. REST request-payload examples may be included only as explanatory API-design snippets where evidence permits.
+
 Decompose each use case into small, independently testable increments. Start with a useful query-only path by default, and select the lowest-complexity documented AI Studio build unit that solves the confirmed requirement. Honor an explicit user request for broader first-iteration scope or another documented build approach while retaining documented-capability, live-validation, and operation-specific mutation-approval gates.
