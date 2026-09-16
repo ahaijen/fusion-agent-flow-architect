@@ -1,6 +1,6 @@
 # Fusion Agent Flow Architect
 
-A reusable Codex skill for designing evidence-aware Oracle Fusion Cloud Applications integration flows for Oracle AI Agent Studio. It turns business use cases, process descriptions, requirements, and screenshots into an auditable design: first the appropriate AI Studio pattern, then an end-to-end API flow, implementation safeguards, and a BI Publisher alternative where useful.
+A reusable Codex skill for designing evidence-aware Oracle Fusion Cloud Applications integration flows for Oracle AI Agent Studio. It turns business use cases, process descriptions, requirements, and screenshots into an auditable design: first a functional solution hypothesis and appropriate AI Studio pattern, then—when evidence and audience needs justify it—an end-to-end API flow, implementation safeguards, and a BI Publisher alternative.
 
 The skill is deliberately conservative. It distinguishes documented or pod-verified facts from plausible candidates and unknowns, and it never turns a UI label, remembered convention, or guessed naming pattern into an Oracle API or data-model assertion.
 
@@ -20,17 +20,25 @@ The skill is deliberately conservative. It distinguishes documented or pod-verif
 
 ## What it supports
 
-Typical requests include designing a read/update integration for a Fusion business process, mapping a screenshot-driven requirement to candidate APIs, deciding between an AI Workflow, AI Agent Team, and Agentic Application, or proposing a BI Publisher reporting fallback. The skill covers identifier resolution, supporting and child resources, mutation controls, security, failure recovery, release/configuration sensitivity, and a staged testing plan.
+Typical requests include turning a functional business problem into a presales solution hypothesis, designing a read/update integration for a Fusion business process, mapping a screenshot-driven requirement to candidate APIs, deciding between an AI Workflow, AI Agent Team, and Agentic Application, or proposing a BI Publisher reporting fallback. The skill covers discovery questions, proof-of-value scope, identifier resolution, supporting and child resources, mutation controls, security, failure recovery, release/configuration sensitivity, and a staged testing plan.
 
 ## Design and verification philosophy
 
-The skill selects the implementation pattern before it designs APIs. API designs are sequences, not disconnected resource names: every call accounts for its inputs, extracted output, branching, and verification state. REST sufficiency is assessed explicitly; SOAP, ESS, workflow/action interfaces, and BI Publisher are considered only where relevant.
+The skill selects the implementation pattern before it designs APIs. It begins in a business-friendly Discovery / Presales Brief lane by default and can move through Solution Design to Technical Handoff. API designs are sequences, not disconnected resource names: every call accounts for its inputs, extracted output, branching, and verification state. REST sufficiency is assessed explicitly; SOAP, ESS, workflow/action interfaces, and BI Publisher are considered only where relevant.
+
+For every substantive investigation, the skill refreshes Oracle's live Fusion AI Agent Studio Learning Path and records the retrieval date and relevant current topics. That source informs current enablement alignment only; it never substitutes for documentation or target-pod verification of a REST resource, field, tool behavior, role, or permission.
+
+## Live validation and implementation handoff
+
+The skill does not hand a design to Fusion AI Studio solely from documentation or mock data. Before it produces a copyable implementation prompt, every required Fusion REST and external API must be tested against a user-authorized live environment, and the defined business process must be simulated end-to-end with representative authorized test data. Read-only validation is the default. Any write, submit, action, workflow trigger, or external write requires fresh explicit approval for the exact operation, environment, and test record.
+
+When the gate passes, the skill emits a complete **Fusion AI Studio Handoff Prompt** for a separate Codex session using Oracle's [Fusion AI Studio repository](https://github.com/oracle/fusion-ai-studio). The prompt includes only verified, non-secret contracts and evidence; it tells the receiving session to select the release branch matching the verified Fusion release, inspect the current skill instructions, create artifacts locally first, and preserve the tested approval and safety boundaries. If any API or branch is untested or fails, the skill emits a remediation plan instead of a handoff prompt.
 
 Production-oriented BI Publisher SQL is supplied only when documented sources, columns, and joins are sufficiently verified. Otherwise the skill labels it **Assumption-Based Draft SQL** and records every assumption and required documentation/pod check. Mutation flows start with the simplest safe `GET`, use sandbox/test data, and finish by verifying the business result through the applicable UI, REST, report, workflow, ESS, or downstream outcome.
 
 ## Use in Codex
 
-Invoke `$fusion-agent-flow-architect` and provide the use case, known Fusion module and release, target environment, available documentation or API evidence, and whether read-only or mutation behavior is intended. Attach screenshots when relevant. The skill asks focused questions only when an answer would materially alter the business object, API flow, payload, data source, or security model; otherwise it proceeds with clearly marked assumptions.
+Invoke `$fusion-agent-flow-architect` and describe the business problem in your own words. Useful context includes the actor, trigger, desired outcome, approval points, exceptions, known Fusion module and release, target environment, and success measures. Attach screenshots when relevant. The skill uses functional questions first, then asks for technical evidence only when it materially changes the business object, API flow, payload, data source, or security model. Request a **Technical Handoff** when you want the full API and BIP design.
 
 ## Maintenance
 
