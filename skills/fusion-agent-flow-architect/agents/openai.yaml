@@ -1,0 +1,7 @@
+interface:
+  display_name: "Fusion Agent Flow Architect"
+  short_description: "Design verified Fusion API and BIP flows"
+  default_prompt: "Use $fusion-agent-flow-architect to design an evidence-aware Oracle Fusion AI Agent Studio integration flow for my use case."
+
+policy:
+  allow_implicit_invocation: true

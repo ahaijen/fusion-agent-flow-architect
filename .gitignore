@@ -1,0 +1,37 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+secrets/
+
+# Editor and Codex local state
+.vscode/
+.idea/
+.codex/
+*.code-workspace
+
+# Temporary files and logs
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
