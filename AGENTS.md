@@ -10,4 +10,6 @@ The skill's final deliverable is clear, copyable instructions for a separate Fus
 
 For the receiving Fusion AI Studio Codex session, instruct it to create documented Business Objects for every Fusion interaction from the validated REST-based mappings. Do not instruct it to create, configure, or invoke Fusion REST tools, direct REST calls, REST endpoints, or generic REST integrations; retain validated REST contracts solely as mapping evidence.
 
+When the user confirms an environment, retrieve and validate data only through the documented API or Business Object path the AI Agent will use. Never use browser navigation, UI exploration, DOM inspection, screen scraping, RPA, or computer-use automation to obtain environment data. User-provided screenshots are UI observations, not API evidence.
+
 Decompose each use case into small, independently testable increments. Start with a useful query-only path by default, and select the lowest-complexity documented AI Studio build unit that solves the confirmed requirement. Honor an explicit user request for broader first-iteration scope or another documented build approach while retaining documented-capability, live-validation, and operation-specific mutation-approval gates.

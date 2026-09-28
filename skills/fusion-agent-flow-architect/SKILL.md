@@ -21,6 +21,14 @@ For each proposed Fusion interaction, provide a **Business Object mapping**: bus
 
 This boundary applies only to Fusion access. Describe an external system through its documented and live-validated integration mechanism, clearly separating it from Fusion Business Objects.
 
+## Live environment access: agent-equivalent APIs only
+
+Once the user confirms an environment for data discovery, validation, or simulation, retrieve and validate environment data only through the documented API or Business Object execution path that the eventual AI Agent will use. Never use browser screen navigation, UI exploration, DOM inspection, screen scraping, RPA, or computer-use automation to look up data in that environment. A Fusion UI label or page observation is not API evidence.
+
+User-provided screenshots may still be analyzed as input to understand a business process. They must be labelled **UI observation**, and never substitute for API or Business Object verification. If a business owner wants to confirm a final outcome in the Fusion UI, record that as user-performed business confirmation; do not navigate the UI to obtain or validate data on the agent's behalf.
+
+For Fusion, test the same documented Business Object/API path intended for the agent and retain the underlying live REST request/response only as controlled mapping evidence where needed. For external systems, test the exact documented API integration path intended for the agent. If that path is unavailable, inaccessible, or cannot be tested without browser navigation, mark the item **Unknown** or blocked; do not use the browser as a workaround.
+
 ## Start with the audience and delivery depth
 
 Use plain business language unless the requester asks for implementation detail. Choose the delivery lane explicitly:
@@ -175,7 +183,7 @@ Run and record the following evidence in order:
 2. identifier, lookup/reference, pagination, and child-resource resolution;
 3. every required Fusion REST API and external API, including request/response parsing and expected error branches;
 4. an end-to-end simulation of the defined business process using the live APIs, representative authorized test data, and each relevant branch, approval point, and downstream status check;
-5. final business-result verification through the applicable Fusion UI, API response, report, workflow/ESS status, or downstream system.
+5. final business-result verification through the applicable API/Business Object response, report, workflow/ESS status, or downstream API result. A Fusion UI check, if desired, must be performed and reported by the user/business owner rather than navigated by this skill.
 
 For each live test, record the timestamp, environment classification, scenario/test data reference, request purpose, redacted request/response evidence, actual outcome, result status, correlation/reference ID where safe to retain, and unresolved defect or variance. Do not include credentials, secrets, or unnecessary personal/business-sensitive data in the record.
 
@@ -230,7 +238,7 @@ Desired outcome and measures: [OUTCOME_AND_SUCCESS_MEASURES]
 Process journey: [CONFIRMED_USER_JOURNEY_AND_EXCEPTIONS]
 Approvals and non-goals: [APPROVAL_POINTS_AND_NON_GOALS]
 
-Environment and security: This is a [SANDBOX_TEST_PRODUCTION] environment on [VERIFIED_FUSION_RELEASE]. Authentication and connection setup must use approved secure configuration; no credentials are included in this prompt. Enforce [DATA_ACCESS_AND_LEAST_PRIVILEGE_CONSTRAINTS].
+Environment and security: This is a [SANDBOX_TEST_PRODUCTION] environment on [VERIFIED_FUSION_RELEASE]. Authentication and connection setup must use approved secure configuration; no credentials are included in this prompt. Enforce [DATA_ACCESS_AND_LEAST_PRIVILEGE_CONSTRAINTS]. For any confirmed environment, retrieve and validate data only through the documented agent-equivalent API or Business Object path; never use browser navigation, UI exploration, DOM inspection, screen scraping, RPA, or computer-use automation.
 
 Recommended implementation: [CONFIRMED_PATTERN_AND_RATIONALE]
 Platform boundary: Build only the selected-release capabilities documented on docs.oracle.com and verified in the target environment. Do not create a custom web application, frontend, user interface, widget framework, or unsupported interaction. [DOCUMENTED_AGENT_STUDIO_CAPABILITIES_AND_SOURCE_REFERENCES]
@@ -286,7 +294,7 @@ Use this required testing order, and make it concrete for the use case:
 7. create/update in sandbox or test with dedicated data, minimal payload, and a single-record trial;
 8. submit/action/workflow testing;
 9. audit logging, idempotency, retry, recovery, and concurrency testing;
-10. production readiness and verification of the actual business outcome through the applicable Fusion UI, REST response, BIP report, workflow/ESS status, or downstream result.
+10. production readiness and verification of the actual business outcome through the applicable agent-equivalent Business Object/API response, BIP report, workflow/ESS status, or downstream API result. A Fusion UI confirmation, if needed, is user-performed and is not a data-discovery or test mechanism for this skill.
 
 For mutations, require a sandbox/test-first approach, test data, suitable human confirmation, retry and recovery planning, and final cross-channel verification.
 
